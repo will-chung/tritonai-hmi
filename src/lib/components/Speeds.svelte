@@ -1,6 +1,6 @@
 <script>
-  import SetButton from "./SetButton.svelte";
-  import SpeedSelector from "./SpeedSelector.svelte";
+  import SetButton from "$lib/components/SetButton.svelte";
+  import SpeedSelector from "$lib/components/SpeedSelector.svelte";
 </script>
 
 <div id="speeds">

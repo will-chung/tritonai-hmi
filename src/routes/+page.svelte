@@ -1,19 +1,19 @@
 <script>
   import "carbon-components-svelte/css/g80.css";
 
-  import { carNum } from "./stores.js";
-  import { drawSpeedometer } from './Speedometer.js';
-  import { drawFuelMeter } from "./FuelMeter.js";
-  import { drawTachometer } from "./Tachometer.js";
+  import { carNum } from "$lib/stores.js";
+  import { drawSpeedometer } from '$lib/gauges/Speedometer.js';
+  import { drawFuelMeter } from "$lib/gauges/FuelMeter.js";
+  import { drawTachometer } from "$lib/gauges/Tachometer.js";
 
-  import { GasStationFilled, Restart } from "carbon-icons-svelte";
+  import { GasStationFilled } from "carbon-icons-svelte";
 
   import { onMount } from 'svelte';
 
-  import Flags from "./Flags.svelte";
-  import InfoBar from './InfoBar.svelte';
-  import Speeds from "./Speeds.svelte";
-  import Controls from "./Controls.svelte";
+  import Flags from "$lib/components/Flags.svelte";
+  import InfoBar from '$lib/components/InfoBar.svelte';
+  import Speeds from "$lib/components/Speeds.svelte";
+  import Controls from "$lib/components/Controls.svelte";
 
   const MAX_SPEED = 1000;
   const MAX_RPM = 9000;

@@ -1,5 +1,5 @@
 <script>
-  import { carMode } from './stores.js';
+  import { carMode } from '$lib/stores.js';
 
   export let mode;
   export let disabled;

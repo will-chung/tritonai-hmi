@@ -1,6 +1,6 @@
 <script>
-  import { carNum } from './stores.js';
-  import DateTime from './DateTime.svelte';
+  import { carNum } from '$lib/stores.js';
+  import DateTime from '$lib/components/DateTime.svelte';
   import Circle from 'carbon-icons-svelte/lib/CircleSolid.svelte';
 
   export let height;

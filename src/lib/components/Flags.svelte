@@ -1,5 +1,5 @@
 <script>
-  import Flag from "./Flag.svelte";
+  import Flag from "$lib/components/Flag.svelte";
 
   const flags1 = [
     { color: '#eb6200', label: 'ORANGE' },

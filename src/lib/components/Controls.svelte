@@ -1,7 +1,7 @@
 <script>
-  import SetButton from "./SetButton.svelte";
-  import CarSelector from "./CarSelector.svelte";
-  import ModeSelector from "./ModeSelector.svelte";
+  import SetButton from "$lib/components/SetButton.svelte";
+  import CarSelector from "$lib/components/CarSelector.svelte";
+  import ModeSelector from "$lib/components/ModeSelector.svelte";
 </script>
 
 <div id="controls">

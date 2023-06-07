@@ -1,7 +1,7 @@
 <script>
-  import { carMode } from "./stores.js";
-  import Mode from "./Mode.svelte";
-  import SetButton from "./SetButton.svelte";
+  import { carMode } from "$lib/stores.js";
+  import Mode from "$lib/components/Mode.svelte";
+  import SetButton from "$lib/components/SetButton.svelte";
 
   let selector;
   let set = false;
