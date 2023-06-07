@@ -33,17 +33,17 @@
   #flags {
     display: flex;
     flex-grow: 1;
-    padding: 10px;
+    justify-content: right;
+    padding: 20px;
+    padding-right: 30px;
     width: 20%;
     height: 100%;
-    gap: 8px;
+    gap: 10px;
   }
 
   #column1, #column2 {
     display: flex;
-    flex-grow: 1;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
   }
 </style>

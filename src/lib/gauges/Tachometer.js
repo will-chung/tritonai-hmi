@@ -3,32 +3,48 @@ const INCREMENT = 1000;
 const MAX_VALUE = 9000;
 const TOTAL_DEGS = 5 * Math.PI / 4;
 const V_OFFSET = -20;
+
+const START_ANGLE = (3 * Math.PI / 4) + (TOTAL_DEGS / 2);
+const END_ANGLE = (3 * Math.PI / 4) + (TOTAL_DEGS / 2);
+
+const offsetX = -190;
+const offsetY = 110;
   
 export function drawTachometer(canvas, radius, percent, lbl) {
-  if (!canvas) { return; }
+  if (!canvas) return;
+  if (percent < 0) percent = 0;
+  else if (percent > 1) percent = 1;
 
   const context = canvas.getContext('2d');
   const RADIUS = radius;
-  
-  function clearCanvas() {
-    context.clearRect(-canvas.width / 2, -canvas.height / 2, canvas.width, canvas.height);
-  }
-  clearCanvas();
 
-  const startAngle = (3 * Math.PI / 4) + (TOTAL_DEGS / 2); 
+  context.save();
+  context.transform(1, 0, 0, 1, offsetX, offsetY);
+  
+  // function clearCanvas() {
+  //   context.clearRect(-canvas.width / 2, -canvas.height / 2, canvas.width, canvas.height);
+  // }
+  // clearCanvas();
+
   let offset = percent * TOTAL_DEGS;
-  const endAngle = startAngle - offset; 
+  const endAngle = START_ANGLE - offset; 
   
   // draw "needle"
   function drawNeedle() {
+    if (percent > (7000 / MAX_VALUE)) {
+      context.strokeStyle = 'red';
+      context.shadowColor = 'red';
+    } else {
+      context.strokeStyle = COLOR;
+      context.shadowColor = COLOR;
+    }
+    
     context.shadowBlur = 10;
-    context.shadowColor = COLOR;
-    context.strokeStyle = COLOR;
     context.lineWidth = 8;
     context.lineCap = 'round';
     
     context.beginPath();
-    context.arc(0, V_OFFSET, RADIUS, startAngle, endAngle, true);
+    context.arc(0, V_OFFSET, RADIUS, START_ANGLE, endAngle, true);
     context.stroke();
     context.closePath();
 
@@ -55,7 +71,7 @@ export function drawTachometer(canvas, radius, percent, lbl) {
   function drawTicks() {
     context.lineCap = 'round';
     
-    let currAngle = startAngle;
+    let currAngle = START_ANGLE;
     let degInc; 
 
     let startX;
@@ -70,6 +86,14 @@ export function drawTachometer(canvas, radius, percent, lbl) {
     context.lineWidth = 3;
     degInc = (INCREMENT / MAX_VALUE) * TOTAL_DEGS;
     for(let i = 0; i <= MAX_VALUE / INCREMENT; i++) {
+      if (i >= 7) {
+        context.strokeStyle = 'red';
+        context.shadowColor = 'red';
+      } else {
+        context.strokeStyle = 'white';
+        context.shadowColor = 'white';
+      }
+
       startX = (RADIUS - 28) * Math.cos(currAngle);
       startY = (RADIUS - 28) * Math.sin(currAngle);
       endX = (RADIUS - 15) * Math.cos(currAngle);
@@ -86,11 +110,13 @@ export function drawTachometer(canvas, radius, percent, lbl) {
     context.shadowBlur = 0;
     
     // secondary ticks
-    currAngle = startAngle - (degInc / 2);
-    context.strokeStyle = COLOR;
+    currAngle = START_ANGLE - (degInc / 2);
     context.lineWidth = 2;
     degInc = (INCREMENT / MAX_VALUE) * TOTAL_DEGS;
     for (let i = 0; i < MAX_VALUE / INCREMENT; i++) {
+      if (i >= 7) context.strokeStyle = 'red';
+      else context.strokeStyle = COLOR;
+
       startX = (RADIUS - 28) * Math.cos(currAngle);
       startY = (RADIUS - 28) * Math.sin(currAngle);
       endX = (RADIUS - 18) * Math.cos(currAngle);
@@ -107,9 +133,12 @@ export function drawTachometer(canvas, radius, percent, lbl) {
     
     // tertiary ticks
     degInc /= 4;
-    currAngle = startAngle - degInc;
+    currAngle = START_ANGLE - degInc;
     context.lineWidth = 1;
     for (let i = 0; i < MAX_VALUE / INCREMENT; i++) {
+      if (i >= 7) context.strokeStyle = 'red';
+      else context.strokeStyle = COLOR;
+
       for (let j = 0; j < 2; j++) {
         for (let k = 0; k < 1; k++) {
           startX = (RADIUS - 28) * Math.cos(currAngle);
@@ -138,7 +167,7 @@ export function drawTachometer(canvas, radius, percent, lbl) {
 
     const degInc = (INCREMENT / MAX_VALUE) * TOTAL_DEGS;
 
-    let currAngle = -startAngle;
+    let currAngle = -START_ANGLE;
 
     let x;
     let y;
@@ -162,7 +191,8 @@ export function drawTachometer(canvas, radius, percent, lbl) {
   drawTickLabels();
 
   function drawLabel(lbl) {
-    context.fillStyle = COLOR;
+    if (percent >= (7000 / MAX_VALUE)) context.fillStyle = 'red';
+    else context.fillStyle = COLOR;
     
     context.save();
     context.transform(1, 0, 0, -1, 0, 0);
@@ -175,4 +205,6 @@ export function drawTachometer(canvas, radius, percent, lbl) {
   }
 
   drawLabel(lbl);
+
+  context.restore();
 }

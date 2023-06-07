@@ -77,6 +77,6 @@
   }
 
   span {
-    width: 75px;
+    width: 50px;
   }
 </style>

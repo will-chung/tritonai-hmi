@@ -5,6 +5,7 @@
   import { drawSpeedometer } from '$lib/gauges/Speedometer.js';
   import { drawFuelMeter } from "$lib/gauges/FuelMeter.js";
   import { drawTachometer } from "$lib/gauges/Tachometer.js";
+  import { draw } from "$lib/gauges/Gauge.js";
 
   import { GasStationFilled } from "carbon-icons-svelte";
 
@@ -20,6 +21,7 @@
   const MAX_FUEL = 100;
 
   const INFOBAR_HEIGHT = 8;
+  const OVERFLOW = 250;
   
   let windowHeight;
   let height; 
@@ -28,51 +30,113 @@
   let fuelPercent = 1;
   let rpmPercent = 1;
 
-  let speedCanvas; 
-  let fuelCanvas;
-  let rpmCanvas;
-  
-  async function demo() {
-    if (!$carNum.selected) { return; }
+  // let speedCanvas; 
+  // let fuelCanvas;
+  // let rpmCanvas;
 
-    let speedData;
-    let rpmData;
-    let fuelData;
+  let canvas;
 
-    let res = await fetch('speed.csv');
-    speedData = (await res.text()).split('\n');
+  function showcase() {
+     if (!$carNum.selected) return;
 
-    res = await fetch('rpm.csv');
-    rpmData = (await res.text()).split('\n');
+    const speedStart = 0;
+    const rpmStart = 0;
+    const fuelStart = 100;
 
-    res = await fetch('fuel.csv');
-    fuelData = (await res.text()).split('\n');
+    let speedOffset = 0;
+    let rpmOffset = 0; 
+    let fuelOffset = 0;
+    let timeoutID;
 
-    const max = Math.max(speedData.length, rpmData.length, fuelData.length);
-
-    let speedIndex = 0;
-    let rpmIndex = 0;
-    let fuelIndex = 0;
-    function step() {
-      if (speedIndex < speedData.length) {
-        speedPercent = speedData[speedIndex] / MAX_SPEED; 
-        speedIndex += 1;
-        setTimeout(step, 25);
+    function nextFrame() {
+      if (!$carNum.selected) {
+        clearTimeout(timeoutID);
+        return;
       }
-      if (rpmIndex < rpmData.length) {
-        rpmPercent = rpmData[rpmIndex] / MAX_RPM;
-        rpmIndex += 1;
-        setTimeout(step);
-      }
-      if (fuelIndex < fuelData.length) {
-        fuelPercent = fuelData[fuelIndex] / MAX_FUEL;
-        fuelIndex += 1;
-        setTimeout(step, 250);
-      }
+
+      speedOffset += 10;
+      rpmOffset += 90;
+      fuelOffset -= 1;
+
+      speedPercent = (speedStart + speedOffset) / MAX_SPEED;
+      rpmPercent = (rpmStart + rpmOffset) / MAX_RPM;
+      fuelPercent = (fuelStart + fuelOffset) / MAX_FUEL;
+
+      timeoutID = setTimeout(nextFrame, 100);
     }
 
-    step();
+    nextFrame();
   }
+
+  function demo() {
+    if (!$carNum.selected) return;
+
+    const speedStart = 660;
+    const rpmStart = 5000;
+    let timeoutID;
+
+    function nextFrame() {
+      if (!$carNum.selected) {
+        clearTimeout(timeoutID);
+        return;
+      }
+      let speedOffset = Math.floor(Math.random() * 2);
+      let rpmOffset = Math.floor(Math.random() * 90);
+
+      // randomly negate offset
+      if (Math.random() <= 0.5) speedOffset = -speedOffset; 
+      if (Math.random() <= 0.5) rpmOffset = -rpmOffset;
+
+      speedPercent = (speedStart + speedOffset) / MAX_SPEED;
+      rpmPercent = (rpmStart + rpmOffset) / MAX_RPM;
+
+      timeoutID = setTimeout(nextFrame, 100);
+    }
+
+    nextFrame();
+  }
+  
+  // async function demo() {
+  //   if (!$carNum.selected) return;
+
+  //   let speedData;
+  //   let rpmData;
+  //   let fuelData;
+
+  //   let res = await fetch('speed.csv');
+  //   speedData = (await res.text()).split('\n');
+
+  //   res = await fetch('rpm.csv');
+  //   rpmData = (await res.text()).split('\n');
+
+  //   res = await fetch('fuel.csv');
+  //   fuelData = (await res.text()).split('\n');
+
+  //   const max = Math.max(speedData.length, rpmData.length, fuelData.length);
+
+  //   let speedIndex = 0;
+  //   let rpmIndex = 0;
+  //   let fuelIndex = 0;
+  //   function step() {
+  //     if (speedIndex < speedData.length) {
+  //       speedPercent = speedData[speedIndex] / MAX_SPEED; 
+  //       speedIndex += 1;
+  //       setTimeout(step, 25);
+  //     }
+  //     if (rpmIndex < rpmData.length) {
+  //       rpmPercent = rpmData[rpmIndex] / MAX_RPM;
+  //       rpmIndex += 1;
+  //       setTimeout(step);
+  //     }
+  //     if (fuelIndex < fuelData.length) {
+  //       fuelPercent = fuelData[fuelIndex] / MAX_FUEL;
+  //       fuelIndex += 1;
+  //       setTimeout(step, 250);
+  //     }
+  //   }
+
+  //   step();
+  // }
 
   function createHiPPICanvas(width, height) {
     const ratio = window.devicePixelRatio;
@@ -84,6 +148,9 @@
     canvas.style.height = height + "px";
     canvas.getContext('2d').scale(ratio, ratio);
 
+    canvas.style.position = 'relative';
+    canvas.style.right = `${OVERFLOW / 2}px`;
+
     return canvas;
   } 
 
@@ -92,49 +159,46 @@
     const contentHeight = Math.floor(windowHeight * (1 - (INFOBAR_HEIGHT / 100)));
     height = 0.8 * contentHeight;    
 
-    speedCanvas = createHiPPICanvas((height) + 20, height);
-    document.getElementById('speedometer').appendChild(speedCanvas);
-    const speedContext = speedCanvas.getContext('2d');
-    speedContext.transform(1, 0, 0, -1, (height + 20) / 2, height / 2);
+    // speedCanvas = createHiPPICanvas((height) + 20, height);
+    // document.getElementById('speedometer').appendChild(speedCanvas);
+    // const speedContext = speedCanvas.getContext('2d');
+    // speedContext.transform(1, 0, 0, -1, (height + 20) / 2, height / 2);
 
-    fuelCanvas = createHiPPICanvas((height / 2) + 20, height / 2);
-    document.getElementById('fuelmeter').appendChild(fuelCanvas);
-    const fuelContext = fuelCanvas.getContext('2d');
-    fuelContext.transform(1, 0, 0, -1, (height + 20) / 4, height / 4);
+    // fuelCanvas = createHiPPICanvas((height / 2) + 20, height / 2);
+    // document.getElementById('fuelmeter').appendChild(fuelCanvas);
+    // const fuelContext = fuelCanvas.getContext('2d');
+    // fuelContext.transform(1, 0, 0, -1, (height + 20) / 4, height / 4);
 
-    rpmCanvas = createHiPPICanvas((height / 2) + 20, (height / 2) + 20);
-    document.getElementById('tachometer').appendChild(rpmCanvas);
-    const rpmContext = rpmCanvas.getContext('2d');
-    rpmContext.transform(1, 0, 0, -1, (height + 20) / 4, (height / 4));
+    // rpmCanvas = createHiPPICanvas((height / 2) + 20, (height / 2) + 20);
+    // document.getElementById('tachometer').appendChild(rpmCanvas);
+    // const rpmContext = rpmCanvas.getContext('2d');
+    // rpmContext.transform(1, 0, 0, -1, (height + 20) / 4, (height / 4));
+
+    canvas = createHiPPICanvas(height + OVERFLOW, height);
+    document.getElementById('gauges').appendChild(canvas);
+    const context = canvas.getContext('2d');
+    context.transform(1, 0, 0, -1, (height + OVERFLOW) / 2, height / 2);
   });
 
   $: gasFill = (fuelPercent <= 0.2) ? 'red' : 'white';
 
-  $: drawSpeedometer(speedCanvas, height / 2, speedPercent, 'kmh');
-  $: drawFuelMeter(fuelCanvas, height / 4, fuelPercent);
-  $: drawTachometer(rpmCanvas, height / 4, rpmPercent, 'rpm');
+  // $: drawSpeedometer(speedCanvas, height / 2, speedPercent, 'kmh');
+  // $: drawFuelMeter(fuelCanvas, height / 4, fuelPercent);
+  // $: drawTachometer(rpmCanvas, height / 4, rpmPercent, 'rpm');
 
-  $: if ($carNum.selected) {
-    let speedWorker = new Worker('worker.js');
-    speedWorker.addEventListener('message', (e) => {
-      speedPercent = e.data;
-    });
-    speedWorker.postMessage('speed');
+  $: data = {
+    speedPercent: speedPercent,
+    rpmPercent: rpmPercent,
+    fuelPercent: fuelPercent
+  };
 
-    demo();
+  $: draw(canvas, height, data);
 
-    // let rpmWorker = new Worker('worker.js');
-    // rpmWorker.addEventListener('message', (e) => {
-    //   rpmPercent = e.data;
-    // });
-    // rpmWorker.postMessage('rpm')
-
-    // let fuelWorker = new Worker('worker.js');
-    // fuelWorker.addEventListener('message', (e) => {
-    //   fuelPercent = e.data;
-    // });
-    // fuelWorker.postMessage('fuel')
+  $: if ($carNum.selected && $carNum.num === 6) showcase();
+  else if ($carNum.selected && $carNum.num === 22) {
+    // TODO: easter egg
   }
+  else if ($carNum.selected) demo();
 </script>
 
 <div id="container" style:height="{windowHeight}px">
@@ -142,7 +206,10 @@
   <div id="row">
     <Controls/>
     <div id="gauges" style:height="{height}px">
-      <div class="gauge" id="speedometer">
+      <div id="fuelIcon">
+        <GasStationFilled size="30" fill="{gasFill}"/>
+      </div>
+      <!-- <div class="gauge" id="speedometer">
       </div>
       <div class="gauge" id="fuelmeter">
         <div id="fuelIcon">
@@ -150,7 +217,7 @@
         </div>
       </div>
       <div class="gauge" id="tachometer">
-      </div>
+      </div> -->
     </div>
     <Flags/>
   </div>
@@ -164,16 +231,16 @@
   }
 
   #gauges {
-    flex-grow: 1;
+    aspect-ratio: 1 / 1;
   }
 
-  .gauge {
+  /* .gauge {
     display: flex;
     align-items: center;
     justify-content: center;
-  }
+  } */
 
-  #fuelmeter {
+  /* #fuelmeter {
     position: absolute;
     top: 8%;
     right: 27%;
@@ -183,13 +250,13 @@
     position: absolute;
     top: 8%;
     left: 25%;
-  }
+  } */
 
   #fuelIcon {
     position: absolute;
-    width: 100px;
-    height: 100px;
-    right: 14%;
-    top: 37%;
+    width: 35px;
+    height: 35px;
+    right: 415px; 
+    top: 155px;
   }
 </style>

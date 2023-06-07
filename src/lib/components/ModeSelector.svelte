@@ -39,7 +39,8 @@
   #selector {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: left;
+    width: 100%;
     gap: 10px;
   }
 

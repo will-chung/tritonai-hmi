@@ -8,15 +8,17 @@ const START_ANGLE = (Math.PI / 2) + (TOTAL_DEGS / 2);
 const END_ANGLE = (Math.PI / 2) - (TOTAL_DEGS / 2); 
   
 export function drawSpeedometer(canvas, radius, percent, lbl) {
-  if (!canvas) { return; }
+  if (!canvas) return;
+  if (percent < 0) percent = 0;
+  else if (percent > 1) percent = 1;
 
   const context = canvas.getContext('2d');
   const RADIUS = radius;
   
-  function clearCanvas() {
-    context.clearRect(-canvas.width / 2, -canvas.height / 2, canvas.width, canvas.height);
-  }
-  clearCanvas();
+  // function clearCanvas() {
+  //   context.clearRect(-canvas.width / 2, -canvas.height / 2, canvas.width, canvas.height);
+  // }
+  // clearCanvas();
 
   let offset = percent * TOTAL_DEGS;
   const endAngle = START_ANGLE - offset; 

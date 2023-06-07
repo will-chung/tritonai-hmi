@@ -76,6 +76,8 @@
 
 <style>
   #selector {
+    position: relative;
+    left: -7px;
     width: 100%;
     display: flex;
     justify-content: left;

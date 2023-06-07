@@ -4,27 +4,41 @@ const MAX_VALUE = 100;
 const TOTAL_DEGS = 2 * Math.PI / 3;
 const V_OFFSET = -20;
 
-const START_ANGLE = (Math.PI / 2) + (TOTAL_DEGS / 2);
-const END_ANGLE = (Math.PI / 2) - (TOTAL_DEGS / 2);
+const START_ANGLE = (Math.PI / 4) + (TOTAL_DEGS / 2);
+const END_ANGLE = (Math.PI / 4) - (TOTAL_DEGS / 2);
+
+const offsetX = 150;
+const offsetY = 70;
   
 export function drawFuelMeter(canvas, radius, percent) {
-  if (!canvas) { return; }
+  if (!canvas) return;
+  if (percent < 0) percent = 0;
+  else if (percent > 1) percent = 1;
 
   const context = canvas.getContext('2d');
   const RADIUS = radius;
+
+  context.save();
+  context.transform(1, 0, 0, 1, offsetX, offsetY);
   
-  function clearCanvas() {
-    context.clearRect(-canvas.width / 2, -canvas.height / 2, canvas.width, canvas.height);
-  }
-  clearCanvas();
+  // function clearCanvas() {
+  //   context.clearRect(-canvas.width / 2, -canvas.height / 2, canvas.width, canvas.height);
+  // }
+  // clearCanvas();
 
   let offset = percent * TOTAL_DEGS;
   const endAngle = START_ANGLE - offset; 
   
   // draw "needle"
   function drawNeedle() {
-    if (percent <= 0.2) context.strokeStyle = 'red';
-    else context.strokeStyle = COLOR;
+    if (percent <= 0.2) {
+      context.strokeStyle = 'red';
+      context.shadowColor = 'red';
+    } else {
+      context.strokeStyle = COLOR;
+      context.shadowColor = COLOR;
+    }
+    context.shadowBlur = 10;
     context.lineWidth = 8;
     context.lineCap = 'round';
     
@@ -66,9 +80,9 @@ export function drawFuelMeter(canvas, radius, percent) {
     context.shadowBlur = 10;
     context.lineWidth = 3;
     for(let i = 0; i <= MAX_VALUE / INCREMENT; i++) {
-      if (i === 0 || i === 1) {
+      if (i <= 1) {
         context.strokeStyle = 'red';
-        context.shadowColor = "red"
+        context.shadowColor = 'red';
       } else {
         context.strokeStyle = 'white';
         context.shadowColor = 'white';
@@ -184,4 +198,6 @@ export function drawFuelMeter(canvas, radius, percent) {
   }
 
   drawTickLabels();
+
+  context.restore();
 }
