@@ -6,7 +6,7 @@ The human-machine interface is built as a web application and can be hosted on a
 
 ## Svelte
 
-The web application is built using (SvelteKit)[https://kit.svelte.dev/docs/introduction], a framework for building web applications based on (Svelte)[https://svelte.dev/]. 
+The web application is built using [SvelteKit)](https://kit.svelte.dev/docs/introduction), a framework for building web applications based on [Svelte](https://svelte.dev/). 
 
 ## Deployment
 
