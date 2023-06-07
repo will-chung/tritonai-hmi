@@ -47,7 +47,6 @@
         btn.disabled = false;
       });
     }
-  $: console.log($carSpeeds);
     
   function checkBounds(newDigit, side) {
     if (side === 'left') {

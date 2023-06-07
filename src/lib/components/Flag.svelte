@@ -17,7 +17,6 @@
     lit = !lit;
     if (lit) {
       $statusFlags.push((label.toLowerCase()));
-      console.log($statusFlags)
     } else {
       const index = $statusFlags.indexOf(label.toLowerCase());
       $statusFlags.splice(index, 1);

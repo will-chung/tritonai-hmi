@@ -65,7 +65,6 @@
         setTimeout(step);
       }
       if (fuelIndex < fuelData.length) {
-        console.log(fuelPercent)
         fuelPercent = fuelData[fuelIndex] / MAX_FUEL;
         fuelIndex += 1;
         setTimeout(step, 250);
