@@ -80,11 +80,11 @@ export function drawTachometer(canvas, radius, percent, lbl) {
       context.lineTo(endX, endY + V_OFFSET);
       context.stroke();    
       context.closePath();
-
+      
       currAngle -= degInc;
     }
     context.shadowBlur = 0;
-
+    
     // secondary ticks
     currAngle = startAngle - (degInc / 2);
     context.strokeStyle = COLOR;
@@ -101,10 +101,10 @@ export function drawTachometer(canvas, radius, percent, lbl) {
       context.lineTo(endX, endY + V_OFFSET);
       context.stroke();    
       context.closePath();
-
+      
       currAngle -= degInc;
     }
-
+    
     // tertiary ticks
     degInc /= 4;
     currAngle = startAngle - degInc;

@@ -63,11 +63,17 @@ export function drawFuelMeter(canvas, radius, percent) {
     let endY;
 
     // primary ticks
+    context.shadowBlur = 10;
+    context.lineWidth = 3;
     for(let i = 0; i <= MAX_VALUE / INCREMENT; i++) {
-      if (i === 0 || i === 1) context.strokeStyle = 'red';
-      else context.strokeStyle = 'white';
+      if (i === 0 || i === 1) {
+        context.strokeStyle = 'red';
+        context.shadowColor = "red"
+      } else {
+        context.strokeStyle = 'white';
+        context.shadowColor = 'white';
+      }
 
-      context.lineWidth = 3;
 
       degInc = (INCREMENT / MAX_VALUE) * TOTAL_DEGS;
 
@@ -81,10 +87,11 @@ export function drawFuelMeter(canvas, radius, percent) {
       context.lineTo(endX, endY + V_OFFSET);
       context.stroke();    
       context.closePath();
-
+      
       currAngle -= degInc;
     }
-
+    context.shadowBlur = 0;
+    
     // secondary ticks
     currAngle = START_ANGLE - (degInc / 2);
     for (let i = 0; i < MAX_VALUE / INCREMENT; i++) {
