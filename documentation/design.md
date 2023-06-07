@@ -54,4 +54,4 @@ The web app contains a few more features than the final design above:
 
 ## Functionality
 
-Since the HMI is currently only a frontend template not connected to any backend, it is difficult to see it at work. However, to view a short demo of the gauges displaying different values, set any car number by pressing on `SELECT CAR`. This will trigger the HMI to "connect" to a vehicle and the gauges will update to simulate data coming in.
+Since the HMI is currently only a frontend template not connected to any backend, it is difficult to see it at work. However, to view a short demo of the gauges displaying different values, set any car number by pressing on `SELECT CAR`. This will trigger the HMI to "connect" to a vehicle and the gauges will update to simulate data coming in. If car number 6 is selected, then the gauges will increase from 0 to their maximum value.
