@@ -1,6 +1,6 @@
 # Design
 
-## Initial
+## Initial Design
 
 The initial design of the HMI is shown below:
 
@@ -18,7 +18,7 @@ Car modes are mutually exclusive and only one can be active at a time (unlike fl
 
 For all set buttons, once a set button is active the associated value cannot be changed. For example, once a car mode is set, the mode buttons become disabled and cannot be clicked. Only once the set button is toggled to inactive can the associated value be changed again.
 
-## Final
+## Final Design
 
 The simple layout of the initial design made it somewhat unintuitive, which prompted a redesign to the one shown below:
 
@@ -54,4 +54,4 @@ The web app contains a few more features than the final design above:
 
 ## Functionality
 
-Since the HMI is currently only a frontend template not connected to any backend, it is difficult to see it at work. However, to view a short demo of gauges displaying different values, set any car number. This will trigger the HMI to "connect" to a vehicle and start moving the gauges to simulate data coming in.
+Since the HMI is currently only a frontend template not connected to any backend, it is difficult to see it at work. However, to view a short demo of the gauges displaying different values, set any car number by pressing on `SELECT CAR`. This will trigger the HMI to "connect" to a vehicle and the gauges will update to simulate data coming in.
