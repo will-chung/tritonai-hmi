@@ -1,6 +1,7 @@
 <script>
   import SetButton from "$lib/components/SetButton.svelte";
   import { ChevronUp, ChevronDown } from 'carbon-icons-svelte';
+  import { carSpeeds } from "$lib/stores.js";
   
   export let text;
 
@@ -16,13 +17,38 @@
     btns.forEach(btn => {
       btn.disabled = true;
     });
-  } else if (selector) {
-    const btns = selector.querySelectorAll('.select');
-    btns.forEach(btn => {
-      btn.disabled = false;
-    });
-  }
-
+    const currentValue = parseInt('' + leftDigit + middleDigit + rightDigit);
+    switch (text) {
+      case 'GREEN SPEED':
+        $carSpeeds.greenSpeed = currentValue;
+        break;
+      case 'YELLOW SPEED':
+        $carSpeeds.yellowSpeed = currentValue;
+        break;
+      case 'PIT ROAD SPEED':
+        $carSpeeds.pitRoadSpeed = currentValue;
+        break;
+      case 'PIT LANE SPEED':
+        $carSpeeds.pitLaneSpeed = currentValue;
+        break;
+    }
+    // code to communicate current speeds to connected car can be placed here
+    // all currently set speeds can be accessed with `$carSpeeds`
+    // which contains an object of the form:
+    // {
+      //   greenSpeed: {current value},
+      //   yellowSpeed: {current value},
+      //   pitRoadSpeed: {current value},
+      //   pitLaneSpeed: {current value}
+      // }
+    } else if (selector) {
+      const btns = selector.querySelectorAll('.select');
+      btns.forEach(btn => {
+        btn.disabled = false;
+      });
+    }
+  $: console.log($carSpeeds);
+    
   function checkBounds(newDigit, side) {
     if (side === 'left') {
       if (newDigit === 2) {

@@ -1,5 +1,4 @@
 <script>
-  import SetButton from "$lib/components/SetButton.svelte";
   import SpeedSelector from "$lib/components/SpeedSelector.svelte";
 </script>
 

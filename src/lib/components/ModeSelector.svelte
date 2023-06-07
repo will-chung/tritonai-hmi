@@ -11,6 +11,8 @@
   let modes1 = ['TEST', 'ATTACK'];
   let modes2 = ['QUALIFY', 'DEFEND'];
 
+  // code to communicate selected mode to connected car can be placed here
+  // currently selected mode can be accessed with `$carMode`
   $: if (set) modeDisabled = true;
   else if (selector) modeDisabled = false; 
 

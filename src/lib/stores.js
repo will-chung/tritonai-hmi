@@ -10,7 +10,7 @@ const initialSpeeds = {
 export const carNum = writable({ num: 0, selected: false });
 export const carMode = writable('');
 export const carSpeeds = writable(initialSpeeds);
-export const statusFlag = writable('');
+export const statusFlags = writable([]);
 
 export const date = readable(new Date(), function start(set) {
   const interval = setInterval(() => {

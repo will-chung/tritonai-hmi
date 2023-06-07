@@ -9,6 +9,7 @@
   let selector;
   let set = false;
 
+  // if the set button is active, disable associated buttons
   $: if (set) {
     const btns = selector.querySelectorAll('.select');
     btns.forEach(btn => {
@@ -18,6 +19,7 @@
       num: parseInt('' + leftDigit + rightDigit),
       selected: true
     };
+    // code to connect to a vehicle can be placed here
   } else if (selector) {
     const btns = selector.querySelectorAll('.select');
     btns.forEach(btn => {

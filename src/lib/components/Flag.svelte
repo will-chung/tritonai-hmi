@@ -1,4 +1,6 @@
 <script>
+  import { statusFlags } from "$lib/stores.js";
+
   export let color;
   export let label; 
   export let left;
@@ -13,6 +15,15 @@
 
   function toggle() {
     lit = !lit;
+    if (lit) {
+      $statusFlags.push((label.toLowerCase()));
+      console.log($statusFlags)
+    } else {
+      const index = $statusFlags.indexOf(label.toLowerCase());
+      $statusFlags.splice(index, 1);
+    }
+    // code to communicate selected flag to connected vehicle can be placed here
+    // an array of all currently active flags can be accessed with `$statusFlags`
   }
 </script>
 
