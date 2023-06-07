@@ -1,38 +1,29 @@
-# create-svelte
+# Autonomous Racecar Human-Machine Interface
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+## Overview
 
-## Creating a project
+This project is meant to serve as a human-machine interface (HMI) to be used for control and monitoring of an autonomous racecar.
 
-If you're seeing this, you've probably already done this step. Congrats!
+## Team Members
+- Alexis Morales Flores
+- William Chung
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+## Demo
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+The current state of the project can be viewed at [this](https://will-chung.github.io/tritonai-hmi/) link.
 
-## Developing
+## Usage
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+To run the project the locally, follow these steps:
+1. Download all project files into a local directory (this can be easily done with `git clone`)
+2. Inside the directory containing the project files, run `npm install` to install all dependencies
+3. Start a development server with `npm run dev`
+4. You can also build a production version of the project with `npm run build` and preview this production build with `npm run preview`
 
-```bash
-npm run dev
+## Documentation
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+All documentation is contained in the `documentation/` directory. The directory's contents are:
+- `technology.md`: technical details of the project
+- `design.md`: design rationale
+- `reports/`: all reports related to the project
+- `presentations`: all presentations related to the project
