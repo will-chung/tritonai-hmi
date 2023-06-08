@@ -26,4 +26,4 @@ All documentation is contained in the `documentation/` directory. The directory'
 - `technology.md`: technical details of the project
 - `design.md`: design rationale
 - `reports/`: all reports related to the project
-- `presentations`: all presentations related to the project
+- `presentations/`: all presentations related to the project
