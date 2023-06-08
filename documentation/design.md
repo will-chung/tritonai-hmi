@@ -4,11 +4,11 @@
 
 The initial design of the HMI is shown below:
 
-![initial design](./images/initial-design.png "Inital Design")
+<img src="./images/initial-design.png" alt="Initial Design" width="700">
 
 and after translation to Figma:
 
-![figma initial design](./images/initial-design-figma.png "Initial Design Figma")
+<img src="./images/initial-design-figma.png" alt="Initial Design Figma" width="700">
 
 Circles are set buttons, and when toggled they set their associated value. For example, when the `SELECT CAR` set button is toggled, the currently selected car number is set as the current value. A set button is active (the value is set) when it lights up green. 
 
@@ -22,31 +22,31 @@ For all set buttons, once a set button is active the associated value cannot be 
 
 The simple layout of the initial design made it somewhat unintuitive, which prompted a redesign to the one shown below:
 
-![final design](./images/final-design.png "Final Design")
+<img src="./images/final-design.png" alt="Final Design" width="700">
 
 The final design still contains all the components of the initial design, just in a different layout. The design can be divided into separate components:
 
 - Info bar: displays the currently connect car and the date/time
-![infobar](./images/infobar.png "Infobar")
+<img src="./images/infobar.png" alt="Infobar" width="700">
 
 - Gauges: contains various gauges displaying data from the car
-![gauges](./images/gauges.png "Gauges")
+<img src="./images/gauges.png" alt="Gauges" width="700">
 
 - Car selector: used to select which car to connect to
-![car selector](./images/car-selector.png "Car Selector")
+<img src="./images/car-selector.png" alt="Car Selector" width="700">
 
 - Mode selector: used to select the current mode
-![mode selector](./images/mode-selector.png "Mode Selector")
+<img src="./images/mode-selector.png" alt="Mode Selector" width="700">
 
 - Flag selector: used to set active status flags
-![flag selector](./images/flags.png "Flag Selector")
+<img src="./images/flags.png" alt="Flag Selector" width="700">
 
 - Speed selectors: used to set different speeds for the car
-![speed selector](./images/speed-selectors.png "Speed Selectors")
+<img src="./images/speed-selectors.png" alt="Speed Selectors" width="700">
 
 The final design translated to a web app looks like:
 
-!["web app](./images/web-app.png "Web App")
+<img src="./images/web-app.png" alt="Web App" width="700">
 
 The web app contains a few more features than the final design above:
 - Status indicator: a small dot next to the car number in the info bar that displays the current status of the HMI. Green if connected to a car and red otherwise.
