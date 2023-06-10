@@ -20,19 +20,17 @@
   const MAX_RPM = 9000;
   const MAX_FUEL = 100;
 
-  const INFOBAR_HEIGHT = 8;
-  const OVERFLOW = 250;
+  const INFOBAR_HEIGHT = 40;
+  let OVERFLOW;
   
+  let windowWidth;
   let windowHeight;
+  let contentHeight;
   let height; 
 
   let speedPercent = 1;
   let fuelPercent = 1;
   let rpmPercent = 1;
-
-  // let speedCanvas; 
-  // let fuelCanvas;
-  // let rpmCanvas;
 
   let canvas;
 
@@ -96,48 +94,6 @@
     nextFrame();
   }
   
-  // async function demo() {
-  //   if (!$carNum.selected) return;
-
-  //   let speedData;
-  //   let rpmData;
-  //   let fuelData;
-
-  //   let res = await fetch('speed.csv');
-  //   speedData = (await res.text()).split('\n');
-
-  //   res = await fetch('rpm.csv');
-  //   rpmData = (await res.text()).split('\n');
-
-  //   res = await fetch('fuel.csv');
-  //   fuelData = (await res.text()).split('\n');
-
-  //   const max = Math.max(speedData.length, rpmData.length, fuelData.length);
-
-  //   let speedIndex = 0;
-  //   let rpmIndex = 0;
-  //   let fuelIndex = 0;
-  //   function step() {
-  //     if (speedIndex < speedData.length) {
-  //       speedPercent = speedData[speedIndex] / MAX_SPEED; 
-  //       speedIndex += 1;
-  //       setTimeout(step, 25);
-  //     }
-  //     if (rpmIndex < rpmData.length) {
-  //       rpmPercent = rpmData[rpmIndex] / MAX_RPM;
-  //       rpmIndex += 1;
-  //       setTimeout(step);
-  //     }
-  //     if (fuelIndex < fuelData.length) {
-  //       fuelPercent = fuelData[fuelIndex] / MAX_FUEL;
-  //       fuelIndex += 1;
-  //       setTimeout(step, 250);
-  //     }
-  //   }
-
-  //   step();
-  // }
-
   function createHiPPICanvas(width, height) {
     const ratio = window.devicePixelRatio;
     const canvas = document.createElement('canvas');
@@ -155,24 +111,12 @@
   } 
 
   onMount(() => {
-    windowHeight = window.innerHeight - 1;
-    const contentHeight = Math.floor(windowHeight * (1 - (INFOBAR_HEIGHT / 100)));
-    height = 0.8 * contentHeight;    
+    windowHeight = window.innerHeight - 14;
+    windowWidth = window.innerWidth;
+    contentHeight = Math.floor(windowHeight * (1 - (INFOBAR_HEIGHT / windowHeight)));
+    height = 0.82 * contentHeight;    
 
-    // speedCanvas = createHiPPICanvas((height) + 20, height);
-    // document.getElementById('speedometer').appendChild(speedCanvas);
-    // const speedContext = speedCanvas.getContext('2d');
-    // speedContext.transform(1, 0, 0, -1, (height + 20) / 2, height / 2);
-
-    // fuelCanvas = createHiPPICanvas((height / 2) + 20, height / 2);
-    // document.getElementById('fuelmeter').appendChild(fuelCanvas);
-    // const fuelContext = fuelCanvas.getContext('2d');
-    // fuelContext.transform(1, 0, 0, -1, (height + 20) / 4, height / 4);
-
-    // rpmCanvas = createHiPPICanvas((height / 2) + 20, (height / 2) + 20);
-    // document.getElementById('tachometer').appendChild(rpmCanvas);
-    // const rpmContext = rpmCanvas.getContext('2d');
-    // rpmContext.transform(1, 0, 0, -1, (height + 20) / 4, (height / 4));
+    OVERFLOW = height / 2;
 
     canvas = createHiPPICanvas(height + OVERFLOW, height);
     document.getElementById('gauges').appendChild(canvas);
@@ -181,10 +125,13 @@
   });
 
   $: gasFill = (fuelPercent <= 0.2) ? 'red' : 'white';
-
-  // $: drawSpeedometer(speedCanvas, height / 2, speedPercent, 'kmh');
-  // $: drawFuelMeter(fuelCanvas, height / 4, fuelPercent);
-  // $: drawTachometer(rpmCanvas, height / 4, rpmPercent, 'rpm');
+  $: iconSize = height / 20;
+  
+  // position fuel icon
+  $: radius = height / 2;
+  $: adjustedRadius = radius * Math.sin(Math.PI / 6);
+  $: bottom = (contentHeight * 0.2) + (adjustedRadius) + (radius * Math.cos(Math.PI / 4)) + 15;
+  $: right = (windowWidth * 0.5) - radius + 10; 
 
   $: data = {
     speedPercent: speedPercent,
@@ -203,60 +150,34 @@
 
 <div id="container" style:height="{windowHeight}px">
   <InfoBar height="{INFOBAR_HEIGHT}"/>
-  <div id="row">
-    <Controls/>
-    <div id="gauges" style:height="{height}px">
-      <div id="fuelIcon">
-        <GasStationFilled size="30" fill="{gasFill}"/>
-      </div>
-      <!-- <div class="gauge" id="speedometer">
-      </div>
-      <div class="gauge" id="fuelmeter">
-        <div id="fuelIcon">
-          <GasStationFilled size="30" fill="{gasFill}"/>
+  <div id="content" style:height="{contentHeight}px">
+    <div id="row">
+      <Controls/>
+      <div id="gauges">
+        <div id="fuelIcon"
+             style:bottom="{bottom}px"
+             style:right="{right}px">
+          <GasStationFilled size="{iconSize ? iconSize : 0}" fill="{gasFill}"/>
         </div>
       </div>
-      <div class="gauge" id="tachometer">
-      </div> -->
+      <Flags/>
     </div>
-    <Flags/>
+    <Speeds/>
   </div>
-  <Speeds/>
 </div>
 
 <style>
   #row {
     display: flex;
-    height: 70%;
+    height: 79%;
   }
 
   #gauges {
+    height: 100%;
     aspect-ratio: 1 / 1;
   }
 
-  /* .gauge {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  } */
-
-  /* #fuelmeter {
-    position: absolute;
-    top: 8%;
-    right: 27%;
-  }
-
-  #tachometer {
-    position: absolute;
-    top: 8%;
-    left: 25%;
-  } */
-
   #fuelIcon {
     position: absolute;
-    width: 35px;
-    height: 35px;
-    right: 415px; 
-    top: 155px;
   }
 </style>

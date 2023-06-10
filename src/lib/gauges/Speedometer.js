@@ -1,26 +1,31 @@
+import { drawFuelMeter } from "./FuelMeter";
+import { drawTachometer } from "./Tachometer";
+
 const COLOR = '#42be65';
 const INCREMENT = 100; 
 const MAX_VALUE = 1000;
 const TOTAL_DEGS = 5 * Math.PI / 4;
-const V_OFFSET = -90;
 
 const START_ANGLE = (Math.PI / 2) + (TOTAL_DEGS / 2); 
 const END_ANGLE = (Math.PI / 2) - (TOTAL_DEGS / 2); 
   
-export function drawSpeedometer(canvas, radius, percent, lbl) {
+export function drawSpeedometer(canvas, radius, data, lbl) {
   if (!canvas) return;
-  if (percent < 0) percent = 0;
-  else if (percent > 1) percent = 1;
-
+  if (data.speedPercent < 0) data.speedPercent = 0;
+  else if (data.speedPercent > 1) data.speedPercent = 1;
+  
   const context = canvas.getContext('2d');
   const RADIUS = radius;
+
+  const missingRadius = radius - Math.abs(radius * Math.sin(START_ANGLE));
+  const V_OFFSET = -missingRadius + 50;
   
   // function clearCanvas() {
   //   context.clearRect(-canvas.width / 2, -canvas.height / 2, canvas.width, canvas.height);
   // }
   // clearCanvas();
 
-  let offset = percent * TOTAL_DEGS;
+  let offset = data.speedPercent * TOTAL_DEGS;
   const endAngle = START_ANGLE - offset; 
   
   // draw "needle"
@@ -191,7 +196,7 @@ export function drawSpeedometer(canvas, radius, percent, lbl) {
     context.shadowBlur = 0;
   }
 
-  drawValue(Math.floor(percent * MAX_VALUE));
+  drawValue(Math.floor(data.speedPercent * MAX_VALUE));
 
   function drawLabel(lbl) {
     context.fillStyle = COLOR;
@@ -206,4 +211,7 @@ export function drawSpeedometer(canvas, radius, percent, lbl) {
   }
 
   drawLabel(lbl);
+
+  drawTachometer(canvas, radius / 2, data.rpmPercent, 'rpm', V_OFFSET);
+  drawFuelMeter(canvas, radius / 2, data.fuelPercent, V_OFFSET);
 }

@@ -48,7 +48,7 @@
 
 <style>
   #flag {
-    height: 100px;
+    height: 90px;
     display: flex;
     align-items: center;
     gap: 8px;

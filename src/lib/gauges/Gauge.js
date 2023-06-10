@@ -1,6 +1,4 @@
 import { drawSpeedometer } from "./Speedometer.js";
-import { drawTachometer } from "./Tachometer.js";
-import { drawFuelMeter } from "./FuelMeter";
 
 export function draw(canvas, height, data) {
   if (!canvas) return;
@@ -12,7 +10,5 @@ export function draw(canvas, height, data) {
   }
   clearCanvas();
 
-  drawSpeedometer(canvas, height / 2, data.speedPercent, 'kmh');
-  drawTachometer(canvas, height / 4, data.rpmPercent, 'rpm');
-  drawFuelMeter(canvas, height / 4, data.fuelPercent);
+  drawSpeedometer(canvas, height / 2, data, 'kmh');
 }

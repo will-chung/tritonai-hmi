@@ -1,3 +1,5 @@
+import { GasStationFilled } from "carbon-icons-svelte";
+
 const COLOR = 'white';
 const INCREMENT = 20; 
 const MAX_VALUE = 100;
@@ -7,16 +9,18 @@ const V_OFFSET = -20;
 const START_ANGLE = (Math.PI / 4) + (TOTAL_DEGS / 2);
 const END_ANGLE = (Math.PI / 4) - (TOTAL_DEGS / 2);
 
-const offsetX = 150;
-const offsetY = 70;
-  
-export function drawFuelMeter(canvas, radius, percent) {
+
+export function drawFuelMeter(canvas, radius, percent, vOffset) {
   if (!canvas) return;
   if (percent < 0) percent = 0;
   else if (percent > 1) percent = 1;
 
   const context = canvas.getContext('2d');
   const RADIUS = radius;
+
+  const padding = 0;
+  const offsetX = ((radius * 2) * Math.sqrt(2) / 2) + padding;
+  const offsetY = ((radius * 2) * Math.sqrt(2) / 2) + vOffset + padding;
 
   context.save();
   context.transform(1, 0, 0, 1, offsetX, offsetY);

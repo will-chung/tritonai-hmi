@@ -33,6 +33,7 @@
   #flags {
     display: flex;
     flex-grow: 1;
+    align-items: center;
     justify-content: right;
     padding: 20px;
     padding-right: 30px;
@@ -44,6 +45,5 @@
   #column1, #column2 {
     display: flex;
     flex-direction: column;
-    align-items: center;
   }
 </style>

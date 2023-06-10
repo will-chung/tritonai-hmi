@@ -5,18 +5,19 @@ const TOTAL_DEGS = 5 * Math.PI / 4;
 const V_OFFSET = -20;
 
 const START_ANGLE = (3 * Math.PI / 4) + (TOTAL_DEGS / 2);
-const END_ANGLE = (3 * Math.PI / 4) + (TOTAL_DEGS / 2);
 
-const offsetX = -190;
-const offsetY = 110;
-  
-export function drawTachometer(canvas, radius, percent, lbl) {
+export function drawTachometer(canvas, radius, percent, lbl, vOffset) {
   if (!canvas) return;
   if (percent < 0) percent = 0;
   else if (percent > 1) percent = 1;
-
+  
   const context = canvas.getContext('2d');
   const RADIUS = radius;
+  
+  const adjustedRadius = Math.abs(radius * Math.sin(START_ANGLE - (Math.PI / 4)));
+  const padding = adjustedRadius;
+  const offsetX = -((radius * 2) * Math.sqrt(2) / 2) - padding;
+  const offsetY = ((radius * 2) * Math.sqrt(2) / 2) + vOffset + padding;
 
   context.save();
   context.transform(1, 0, 0, 1, offsetX, offsetY);

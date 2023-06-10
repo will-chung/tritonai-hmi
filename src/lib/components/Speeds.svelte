@@ -3,10 +3,10 @@
 </script>
 
 <div id="speeds">
-  <SpeedSelector text="GREEN SPEED"/>
-  <SpeedSelector text="YELLOW SPEED"/>
-  <SpeedSelector text="PIT ROAD SPEED"/>
-  <SpeedSelector text="PIT LANE SPEED"/>
+  <SpeedSelector text="GREEN SPEED" right="{true}"/>
+  <SpeedSelector text="YELLOW SPEED" right="{true}"/>
+  <SpeedSelector text="PIT ROAD SPEED" right="{true}"/>
+  <SpeedSelector text="PIT LANE SPEED" right="{false}"/>
 </div>
 
 <style>
@@ -16,7 +16,7 @@
     justify-content: space-evenly;
     position: absolute;
     bottom: 0;
-    height: 22%;
+    height: 20%;
     width: 100%;
   }
 </style>

@@ -4,6 +4,7 @@
   import { carSpeeds } from "$lib/stores.js";
   
   export let text;
+  export let right;
 
   let leftDigit = 0;
   let middleDigit = 0;
@@ -87,7 +88,7 @@
   }
 </script>
 
-<div id="selector" bind:this={selector}>
+<div id="selector" bind:this={selector} style:border-right="{right ? '3px solid black' : ''}">
   <div id="numSelect">
     <div id="left">
       <button class="select" on:click="{() => increment('left')}">
@@ -126,7 +127,6 @@
 <style>
   #selector {
     border-top: 3px solid black;
-    border-right: 3px solid black;
     height: 95%;
     width: 100%;
     display: flex;
