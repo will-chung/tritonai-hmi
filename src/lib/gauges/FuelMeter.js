@@ -17,11 +17,11 @@ export function drawFuelMeter(canvas, radius, percent, vOffset) {
 
   const context = canvas.getContext('2d');
   const RADIUS = radius;
-
+  
   const padding = 0;
   const offsetX = ((radius * 2) * Math.sqrt(2) / 2) + padding;
   const offsetY = ((radius * 2) * Math.sqrt(2) / 2) + vOffset + padding;
-
+  
   context.save();
   context.transform(1, 0, 0, 1, offsetX, offsetY);
   

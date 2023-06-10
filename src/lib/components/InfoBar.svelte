@@ -8,7 +8,7 @@
   $: fill = $carNum.selected ? 'green' : 'red';
 </script>
 
-<div id="infobar" style:height="{height}pt">
+<div id="infobar" style:height="{height}px">
   <div id="carDisplay">
     <span id="carNum">Car {$carNum.num}</span>
     <Circle fill="{fill}"/>

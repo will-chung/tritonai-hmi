@@ -2,9 +2,6 @@
   import "carbon-components-svelte/css/g80.css";
 
   import { carNum } from "$lib/stores.js";
-  import { drawSpeedometer } from '$lib/gauges/Speedometer.js';
-  import { drawFuelMeter } from "$lib/gauges/FuelMeter.js";
-  import { drawTachometer } from "$lib/gauges/Tachometer.js";
   import { draw } from "$lib/gauges/Gauge.js";
 
   import { GasStationFilled } from "carbon-icons-svelte";
@@ -20,7 +17,7 @@
   const MAX_RPM = 9000;
   const MAX_FUEL = 100;
 
-  const INFOBAR_HEIGHT = 40;
+  const INFOBAR_HEIGHT = 50;
   let OVERFLOW;
   
   let windowWidth;
@@ -111,10 +108,10 @@
   } 
 
   onMount(() => {
-    windowHeight = window.innerHeight - 14;
+    windowHeight = window.innerHeight;
     windowWidth = window.innerWidth;
     contentHeight = Math.floor(windowHeight * (1 - (INFOBAR_HEIGHT / windowHeight)));
-    height = 0.82 * contentHeight;    
+    height = 0.8 * contentHeight;    
 
     OVERFLOW = height / 2;
 
@@ -125,13 +122,13 @@
   });
 
   $: gasFill = (fuelPercent <= 0.2) ? 'red' : 'white';
-  $: iconSize = height / 20;
+  $: iconSize = height / 18;
   
   // position fuel icon
   $: radius = height / 2;
-  $: adjustedRadius = radius * Math.sin(Math.PI / 6);
-  $: bottom = (contentHeight * 0.2) + (adjustedRadius) + (radius * Math.cos(Math.PI / 4)) + 15;
-  $: right = (windowWidth * 0.5) - radius + 10; 
+  $: adjustedRadius = radius * Math.sin(Math.PI / 8);
+  $: bottom = (contentHeight * 0.2) + (adjustedRadius * 1.4) + (radius * Math.cos(Math.PI / 4)) - 20 + (iconSize * 0.75);
+  $: right = (windowWidth * 0.5) - (radius * Math.cos(Math.PI / 4)) - iconSize - (iconSize * 0.75); 
 
   $: data = {
     speedPercent: speedPercent,
@@ -169,7 +166,7 @@
 <style>
   #row {
     display: flex;
-    height: 79%;
+    height: 80%;
   }
 
   #gauges {

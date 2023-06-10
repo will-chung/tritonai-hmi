@@ -17,8 +17,10 @@ export function drawSpeedometer(canvas, radius, data, lbl) {
   const context = canvas.getContext('2d');
   const RADIUS = radius;
 
-  const missingRadius = radius - Math.abs(radius * Math.sin(START_ANGLE));
-  const V_OFFSET = -missingRadius + 50;
+  const adjustedRadius = Math.abs(radius * Math.sin(START_ANGLE));
+  console.log(adjustedRadius)
+  const V_OFFSET = -radius + (adjustedRadius * 1.4);
+  
   
   // function clearCanvas() {
   //   context.clearRect(-canvas.width / 2, -canvas.height / 2, canvas.width, canvas.height);
