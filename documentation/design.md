@@ -26,7 +26,7 @@ The simple layout of the initial design made it somewhat unintuitive, which prom
 
 The final design still contains all the components of the initial design, just in a different layout. The design can be divided into separate components:
 
-- Info bar: displays the currently connect car and the date/time
+- Info bar: displays the currently connected car and the date/time
 <img src="./images/infobar.png" alt="Infobar" width="700">
 
 - Gauges: contains various gauges displaying data from the car
