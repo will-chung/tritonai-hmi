@@ -149,7 +149,7 @@
     canvas.getContext('2d').scale(ratio, ratio);
 
     canvas.style.position = 'relative';
-    canvas.style.right = `${OVERFLOW / 2}px`;
+    // canvas.style.right = `${OVERFLOW / 2}px`;
 
     return canvas;
   } 
@@ -206,9 +206,6 @@
   <div id="row">
     <Controls/>
     <div id="gauges" style:height="{height}px">
-      <div id="fuelIcon">
-        <GasStationFilled size="30" fill="{gasFill}"/>
-      </div>
       <!-- <div class="gauge" id="speedometer">
       </div>
       <div class="gauge" id="fuelmeter">
@@ -251,12 +248,4 @@
     top: 8%;
     left: 25%;
   } */
-
-  #fuelIcon {
-    position: absolute;
-    width: 35px;
-    height: 35px;
-    right: 415px; 
-    top: 155px;
-  }
 </style>
